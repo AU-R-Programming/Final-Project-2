@@ -1,0 +1,29 @@
+---
+title: "Final Project 2"
+author: "Shahab Musavi"
+date: "2024-11-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+install.packages("usethis")
+usethis::create_package("C:\\Users\\szm0253\\Documents\\GitHub\\Final-Project-2\\Package")
+
+```
+
+```{r}
+usethis::use_git()
+```
+
+```{r}
+install.packages(c("roxygen2", "devtools", "boot"))
+usethis::use_roxygen_md()  # Use roxygen documentation format
+
+```
+
+
