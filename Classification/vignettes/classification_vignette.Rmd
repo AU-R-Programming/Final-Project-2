@@ -1,0 +1,101 @@
+---
+title: "Final-Project-2: Classification Package Vignette"
+author: "Shahab Musavi,John Grace, Nabin Neupane"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Classification Package Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(Classification)
+
+```
+
+
+## Introduction
+The classification package provides tools for logistic regression using numerical optimization, computing bootstrap confidence intervals for model coefficients, and evaluating model performance metrics.
+This vignette demonstrates these functionalities using the adult dataset.
+
+## Preprocessing the Data
+
+First, let let us take a look at the first few rows of the adult data set. The age values are re-scaled using the max-min method to make them fall into the range of [0,1] to match other binary values. The income is already binarized with 1 meaning the income is higher than 50K, and 0 menaing the equal to or lower than 50K.
+```{r}
+# Load the dataset
+adult <- read.csv("adult.csv")
+head(adult)
+```
+
+
+The adult dataset contains categorical variables, so we first preprocess it to convert categorical data into numerical values. Also, to reduce the run time, we just consider "age" and "education" as the predictors.
+
+```{r}
+# Select the 'age' and 'education' columns as features and 'income' as the outcome
+features <- adult[, c("age", "education")]
+outcome <- adult$income  # Assuming 'income' is the binary response variable
+
+# One-hot encode the 'education' column (categorical variable)
+education_transformed <- model.matrix(~ education - 1, data = features)
+
+# Combine the 'age' column with the one-hot encoded 'education' columns
+X <- cbind(1, features$age, education_transformed)  # Add an intercept column
+
+# Prepare y (response variable)
+y <- outcome  # Keep the outcome variable as-is
+
+# Check dimensions
+dim(X)  # Verify rows (observations) and columns (intercept + predictors)
+length(y)  # Verify length matches rows in X
+
+
+```
+
+## Logistic Regression
+We fit a logistic regression model using the logistic_regression() function. Here, we only consider the first 1000 rows of X and y to reduce the run time.
+
+```{r}
+
+# Subset the first 1000 rows of X and y
+X_subset <- X[1:1000, ]
+y_subset <- y[1:1000]
+
+# Fit logistic regression on the subset
+beta <- logistic_regression(X_subset, y_subset)
+print(beta)
+
+```
+
+## Bootstrap Confidence Intervals
+We compute 95% confidence intervals for the coefficients using the bootstrap_ci() function.
+
+```{r}
+ci <- bootstrap_ci(X_subset, y_subset, n_boot = 50, alpha = 0.05)
+print(ci)
+```
+
+## Model Evaluation
+We evaluate the performance of the logistic regression model using the evaluate_model() function.
+
+```{r}
+# Predicted probabilities
+y_pred <- 1 / (1 + exp(-X %*% beta))
+
+# Evaluate model
+metrics <- evaluate_model(y, y_pred, cutoff = 0.5)
+print(metrics)
+
+```
+
+## Conclusion
+This vignette demonstrated how to preprocess data, fit a logistic regression model, compute bootstrap confidence intervals, and evaluate model performance using the classification package and the adult dataset.
+
+## References
+1- https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137
+2- https://smac-group.github.io/irg/articles/vignette.html
+3- https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed
+
+
+
+

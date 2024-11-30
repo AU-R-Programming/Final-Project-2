@@ -2,18 +2,32 @@
 % Please edit documentation in R/logistic_regression.R
 \name{logistic_regression}
 \alias{logistic_regression}
-\title{Logistic Regression Optimization}
+\title{Logistic Regression Using Numerical Optimization}
 \usage{
-logistic_regression(X, y)
+logistic_regression(X, y, ridge_penalty = 1e-05)
 }
 \arguments{
-\item{X}{A matrix of predictors (including intercept column).}
+\item{X}{A matrix of predictors (including the intercept column, if required).}
 
-\item{y}{A vector of binary responses (0/1).}
+\item{y}{A binary response vector (0/1).}
+
+\item{ridge_penalty}{A small constant for ridge regularization to stabilize matrix inversion
+(default is \code{1e-5}).}
 }
 \value{
-A named vector of coefficients (β).
+A named vector of optimized coefficients (\eqn{\beta}).
 }
 \description{
-This function performs logistic regression using numerical optimization.
+This function performs logistic regression using numerical optimization with optional ridge regularization
+for numerical stability.
+}
+\examples{
+# Example usage:
+# Simulated data
+set.seed(123)
+X <- cbind(1, matrix(rnorm(100 * 2), ncol = 2))  # Add intercept and 2 features
+y <- rbinom(100, 1, 0.5)  # Binary response
+beta <- logistic_regression(X, y)
+print(beta)
+
 }

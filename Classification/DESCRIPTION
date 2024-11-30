@@ -2,12 +2,13 @@ Package: Classification
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("Shahab", "Musavi", role = c("aut", "cre"))
-Description: Implements binary classification using logistic regression and numerical optimization.
-License: MIT
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
-Imports:
-    stats,
-    utils,
-    methods
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Suggests: 
+    devtools,
+    testthat,
+    knitr
