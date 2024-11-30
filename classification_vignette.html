@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Shahab Musavi,John Grace, Nabin Neupane" />
+
+<meta name="date" content="2024-11-29" />
+
+<title>Final-Project-2: Classification Package Vignette</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Final-Project-2: Classification Package
+Vignette</h1>
+<h4 class="author">Shahab Musavi,John Grace, Nabin Neupane</h4>
+<h4 class="date">2024-11-29</h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The classification package provides tools for logistic regression
+using numerical optimization, computing bootstrap confidence intervals
+for model coefficients, and evaluating model performance metrics. This
+vignette demonstrates these functionalities using the adult dataset.</p>
+</div>
+<div id="preprocessing-the-data" class="section level2">
+<h2>Preprocessing the Data</h2>
+<p>First, let let us take a look at the first few rows of the adult data
+set. The age values are re-scaled using the max-min method to make them
+fall into the range of [0,1] to match other binary values. The income is
+already binarized with 1 meaning the income is higher than 50K, and 0
+menaing the equal to or lower than 50K.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>adult <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;adult.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">head</span>(adult)</span></code></pre></div>
+<pre><code>##         age         workclass  education      marital.status         occupation
+## 1 0.3013699         State-gov  Bachelors       Never-married       Adm-clerical
+## 2 0.4520548  Self-emp-not-inc  Bachelors  Married-civ-spouse    Exec-managerial
+## 3 0.2876712           Private    HS-grad            Divorced  Handlers-cleaners
+## 4 0.4931507           Private       11th  Married-civ-spouse  Handlers-cleaners
+## 5 0.1506849           Private  Bachelors  Married-civ-spouse     Prof-specialty
+## 6 0.2739726           Private    Masters  Married-civ-spouse    Exec-managerial
+##   native.country income
+## 1  United-States      0
+## 2  United-States      0
+## 3  United-States      0
+## 4  United-States      0
+## 5           Cuba      0
+## 6  United-States      0</code></pre>
+<p>The adult dataset contains categorical variables, so we first
+preprocess it to convert categorical data into numerical values. Also,
+to reduce the run time, we just consider “age” and “education” as the
+predictors.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Select the &#39;age&#39; and &#39;education&#39; columns as features and &#39;income&#39; as the outcome</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>features <span class="ot">&lt;-</span> adult[, <span class="fu">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;education&quot;</span>)]</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>outcome <span class="ot">&lt;-</span> adult<span class="sc">$</span>income  <span class="co"># Assuming &#39;income&#39; is the binary response variable</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co"># One-hot encode the &#39;education&#39; column (categorical variable)</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>education_transformed <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> education <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> features)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co"># Combine the &#39;age&#39; column with the one-hot encoded &#39;education&#39; columns</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, features<span class="sc">$</span>age, education_transformed)  <span class="co"># Add an intercept column</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co"># Prepare y (response variable)</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> outcome  <span class="co"># Keep the outcome variable as-is</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co"># Check dimensions</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="fu">dim</span>(X)  <span class="co"># Verify rows (observations) and columns (intercept + predictors)</span></span></code></pre></div>
+<pre><code>## [1] 30162    18</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">length</span>(y)  <span class="co"># Verify length matches rows in X</span></span></code></pre></div>
+<pre><code>## [1] 30162</code></pre>
+</div>
+<div id="logistic-regression" class="section level2">
+<h2>Logistic Regression</h2>
+<p>We fit a logistic regression model using the logistic_regression()
+function. Here, we only consider the first 1000 rows of X and y to
+reduce the run time.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Subset the first 1000 rows of X and y</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>X_subset <span class="ot">&lt;-</span> X[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, ]</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>y_subset <span class="ot">&lt;-</span> y[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># Fit logistic regression on the subset</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">logistic_regression</span>(X_subset, y_subset)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="fu">print</span>(beta)</span></code></pre></div>
+<pre><code>##                               [,1]
+##                        -4.21435208
+##                         3.65129144
+## education 10th          0.06355911
+## education 11th         -0.60733910
+## education 12th          2.21342708
+## education 1st-4th      -7.31513623
+## education 5th-6th      -7.72734429
+## education 7th-8th       1.33810143
+## education 9th          -8.38178940
+## education Assoc-acdm    1.80861147
+## education Assoc-voc     2.17981348
+## education Bachelors     2.91574853
+## education Doctorate     4.82902662
+## education HS-grad       1.35284374
+## education Masters       2.75373964
+## education Preschool    -6.65729790
+## education Prof-school   5.48738381
+## education Some-college  1.53229987</code></pre>
+</div>
+<div id="bootstrap-confidence-intervals" class="section level2">
+<h2>Bootstrap Confidence Intervals</h2>
+<p>We compute 95% confidence intervals for the coefficients using the
+bootstrap_ci() function.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">bootstrap_ci</span>(X_subset, y_subset, <span class="at">n_boot =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">print</span>(ci)</span></code></pre></div>
+<pre><code>##                              lower     upper
+##                         -7.1919503 -3.672088
+##                          3.0110019  4.634071
+## education 10th         -12.6172389  2.138051
+## education 11th         -15.1580333  1.678932
+## education 12th          -7.2690935  5.577157
+## education 1st-4th      -11.1813950  0.000000
+## education 5th-6th      -12.2290732 -5.987661
+## education 7th-8th       -9.6787421  3.766121
+## education 9th          -13.0809199 -7.313672
+## education Assoc-acdm     0.5727767  4.976788
+## education Assoc-voc      1.3133157  4.998654
+## education Bachelors      2.2645770  5.937511
+## education Doctorate      3.7501700 16.948814
+## education HS-grad        0.6834094  4.508004
+## education Masters        1.9909629  5.873216
+## education Preschool    -10.7603888  0.000000
+## education Prof-school    4.3618554 20.136241
+## education Some-college   0.7901872  4.256068</code></pre>
+</div>
+<div id="model-evaluation" class="section level2">
+<h2>Model Evaluation</h2>
+<p>We evaluate the performance of the logistic regression model using
+the evaluate_model() function.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Predicted probabilities</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>y_pred <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>X <span class="sc">%*%</span> beta))</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co"># Evaluate model</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">evaluate_model</span>(y, y_pred, <span class="at">cutoff =</span> <span class="fl">0.5</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="fu">print</span>(metrics)</span></code></pre></div>
+<pre><code>## $ConfusionMatrix
+##           True
+## Predicted  Positive Negative
+##   Positive     2123     1421
+##   Negative     5385    21233
+## 
+## $Prevalence
+## [1] 0.2489225
+## 
+## $Accuracy
+## [1] 0.7743518
+## 
+## $Sensitivity
+## [1] 0.2827651
+## 
+## $Specificity
+## [1] 0.9372738
+## 
+## $FDR
+## [1] 0.4009594
+## 
+## $DOR
+## [1] 5.890899</code></pre>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>This vignette demonstrated how to preprocess data, fit a logistic
+regression model, compute bootstrap confidence intervals, and evaluate
+model performance using the classification package and the adult
+dataset.</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>1- <a href="https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137" class="uri">https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137</a>
+2- <a href="https://smac-group.github.io/irg/articles/vignette.html" class="uri">https://smac-group.github.io/irg/articles/vignette.html</a>
+3- <a href="https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed" class="uri">https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed</a></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
