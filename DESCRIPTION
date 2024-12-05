@@ -3,8 +3,8 @@ Title: Classification Package Overview
 Version: 0.0.0.9000
 URL: https://AU-R-Programming.github.io/Final-Project-2
 Authors@R: 
-    person("John", "Grace", , "jlg0068@auburn.edu", role = c("aut", "cre"))
-    person("Nabin", "Neupane", , "nzn0046@auburn.edu", role = c("aut", "cre"))
+    person("John", "Grace", , "jlg0068@auburn.edu", role = c("aut", "cre")),
+    person("Nabin", "Neupane", , "nzn0046@auburn.edu", role = c("aut", "cre")),
     person("Shahib", "Musavi", , "szm0253@auburn.edu", role = c("aut", "cre"))
 Description: The classification package provides tools for logistic regression using numerical optimization, computing bootstrap confidence intervals for model coefficients, and evaluating model performance metrics. This package consists of three functions: bootstrap_ci, evaluate_model, and logistic_regression. 
 License: MIT + file LICENSE
