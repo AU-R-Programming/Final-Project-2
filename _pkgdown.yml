@@ -1,0 +1,15 @@
+url: https://AU-R-Programming.github.io/Final-Project-2/
+template:
+  params:
+    bootswatch: flatly
+navbar:
+  left:
+  -   text: Overview
+      href: vignettes/classification_vignette.Rmd
+  -   text: Troubleshooting
+      href: vignettes/classification_help.Rmd
+  right:
+  -   icon: fa-github
+      href: https://github.com/AU-R-Programming/Final-Project-2
+
+

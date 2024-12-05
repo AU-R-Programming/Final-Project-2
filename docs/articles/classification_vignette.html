@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Final-Project-2: Classification Package Vignette • Classification</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -39,22 +39,20 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../vignettes/classification_vignette.Rmd">Overview</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/classification_vignette.html">Final-Project-2: Classification Package Vignette</a>
-    </li>
-  </ul>
+  <a href="../vignettes/classification_help.Rmd">Troubleshooting</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/AU-R-Programming/Final-Project-2" class="external-link">
+    <span class="fa fa-github"></span>
+
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -72,7 +70,7 @@ Vignette</h1>
                         <h4 data-toc-skip class="author">Shahab
 Musavi,John Grace, Nabin Neupane</h4>
             
-            <h4 data-toc-skip class="date">2024-12-03</h4>
+            <h4 data-toc-skip class="date">2024-12-05</h4>
       
 
       <div class="hidden name"><code>classification_vignette.Rmd</code></div>
@@ -92,11 +90,18 @@ vignette demonstrates these functionalities using the adult dataset.</p>
 <div class="section level2">
 <h2 id="preprocessing-the-data">Preprocessing the Data<a class="anchor" aria-label="anchor" href="#preprocessing-the-data"></a>
 </h2>
+<div class="section level3">
+<h3 id="dataset-overview">Dataset Overview<a class="anchor" aria-label="anchor" href="#dataset-overview"></a>
+</h3>
 <p>First, let let us take a look at the first few rows of the adult data
 set. The age values are re-scaled using the max-min method to make them
-fall into the range of [0,1] to match other binary values. The income is
-already binarized with 1 meaning the income is higher than 50K, and 0
-menaing the equal to or lower than 50K.</p>
+fall into the range of [0,1] to match other binary values.</p>
+<ul>
+<li>
+<strong>1</strong> indicates income &gt; 50K</li>
+<li>
+<strong>0</strong> indicates income ≤ 50K</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the dataset</span></span>
 <span><span class="va">adult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"adult.csv"</span><span class="op">)</span></span>
@@ -115,10 +120,14 @@ menaing the equal to or lower than 50K.</p>
 <span><span class="co">## 4  United-States      0</span></span>
 <span><span class="co">## 5           Cuba      0</span></span>
 <span><span class="co">## 6  United-States      0</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="feature-selection-and-transformation">Feature Selection and Transformation<a class="anchor" aria-label="anchor" href="#feature-selection-and-transformation"></a>
+</h3>
 <p>The adult dataset contains categorical variables, so we first
 preprocess it to convert categorical data into numerical values. Also,
-to reduce the run time, we just consider “age” and “education” as the
-predictors.</p>
+to reduce the run time, we just consider <em>age</em> and
+<em>education</em> as the predictors.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Select the 'age' and 'education' columns as features and 'income' as the outcome</span></span>
 <span><span class="va">features</span> <span class="op">&lt;-</span> <span class="va">adult</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"education"</span><span class="op">)</span><span class="op">]</span></span>
@@ -140,12 +149,13 @@ predictors.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>  <span class="co"># Verify length matches rows in X</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 30162</span></span></code></pre>
 </div>
+</div>
 <div class="section level2">
 <h2 id="logistic-regression">Logistic Regression<a class="anchor" aria-label="anchor" href="#logistic-regression"></a>
 </h2>
-<p>We fit a logistic regression model using the logistic_regression()
-function. Here, we only consider the first 1000 rows of X and y to
-reduce the run time.</p>
+<p>We fit a logistic regression model using the
+<code><a href="../reference/logistic_regression.html">logistic_regression()</a></code> function. Here, we only consider the
+first 1000 rows of X and y to reduce the run time.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Subset the first 1000 rows of X and y</span></span>
 <span><span class="va">X_subset</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span>, <span class="op">]</span></span>
@@ -178,7 +188,7 @@ reduce the run time.</p>
 <h2 id="bootstrap-confidence-intervals">Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#bootstrap-confidence-intervals"></a>
 </h2>
 <p>We compute 95% confidence intervals for the coefficients using the
-bootstrap_ci() function.</p>
+<code><a href="../reference/bootstrap_ci.html">bootstrap_ci()</a></code> function.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootstrap_ci.html">bootstrap_ci</a></span><span class="op">(</span><span class="va">X_subset</span>, <span class="va">y_subset</span>, n_boot <span class="op">=</span> <span class="fl">50</span>, alpha <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ci</span><span class="op">)</span></span></code></pre></div>
@@ -206,7 +216,7 @@ bootstrap_ci() function.</p>
 <h2 id="model-evaluation">Model Evaluation<a class="anchor" aria-label="anchor" href="#model-evaluation"></a>
 </h2>
 <p>We evaluate the performance of the logistic regression model using
-the evaluate_model() function.</p>
+the <code><a href="../reference/evaluate_model.html">evaluate_model()</a></code> function.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Predicted probabilities</span></span>
 <span><span class="va">y_pred</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">beta</span><span class="op">)</span><span class="op">)</span></span>
@@ -239,12 +249,15 @@ the evaluate_model() function.</p>
 <span><span class="co">## [1] 5.890899</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>This vignette demonstrated how to preprocess data, fit a logistic
-regression model, compute bootstrap confidence intervals, and evaluate
-model performance using the classification package and the adult
-dataset.</p>
+<p>This vignette demonstrated:</p>
+<ul>
+<li>Preprocessing: Data preparation and transformation.</li>
+<li>Modeling: Logistic regression for binary classification.</li>
+<li>Inference: Bootstrap confidence intervals for coefficients.</li>
+<li>Evaluation: Metrics to assess model performance.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

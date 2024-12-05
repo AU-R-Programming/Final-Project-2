@@ -1,14 +1,15 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/articles/classification_vignette.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/LICENSE-text.html</loc></url>
-<url><loc>/LICENSE.html</loc></url>
-<url><loc>/reference/bootstrap_ci.html</loc></url>
-<url><loc>/reference/evaluate_model.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/logistic_regression.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/404.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/articles/classification_help.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/articles/classification_vignette.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/articles/index.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/authors.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/index.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/LICENSE-text.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/LICENSE.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/reference/bootstrap_ci.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/reference/evaluate_model.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/reference/index.html</loc></url>
+<url><loc>https://AU-R-Programming.github.io/Final-Project-2/reference/logistic_regression.html</loc></url>
 </urlset>
 
