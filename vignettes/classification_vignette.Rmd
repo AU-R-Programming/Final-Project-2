@@ -21,15 +21,23 @@ This vignette demonstrates these functionalities using the adult dataset.
 
 ## Preprocessing the Data
 
-First, let let us take a look at the first few rows of the adult data set. The age values are re-scaled using the max-min method to make them fall into the range of [0,1] to match other binary values. The income is already binarized with 1 meaning the income is higher than 50K, and 0 menaing the equal to or lower than 50K.
+### Dataset Overview
+
+First, let let us take a look at the first few rows of the adult data set. The age values are re-scaled using the max-min method to make them fall into the range of [0,1] to match other binary values. 
+
+- **1** indicates income > 50K
+- **0** indicates income ≤ 50K
+
+
 ```{r}
 # Load the dataset
 adult <- read.csv("adult.csv")
 head(adult)
 ```
 
+### Feature Selection and Transformation
 
-The adult dataset contains categorical variables, so we first preprocess it to convert categorical data into numerical values. Also, to reduce the run time, we just consider "age" and "education" as the predictors.
+The adult dataset contains categorical variables, so we first preprocess it to convert categorical data into numerical values. Also, to reduce the run time, we just consider *age* and *education* as the predictors.
 
 ```{r}
 # Select the 'age' and 'education' columns as features and 'income' as the outcome
@@ -53,7 +61,8 @@ length(y)  # Verify length matches rows in X
 ```
 
 ## Logistic Regression
-We fit a logistic regression model using the logistic_regression() function. Here, we only consider the first 1000 rows of X and y to reduce the run time.
+
+We fit a logistic regression model using the ```logistic_regression()``` function. Here, we only consider the first 1000 rows of X and y to reduce the run time.
 
 ```{r}
 
@@ -68,7 +77,7 @@ print(beta)
 ```
 
 ## Bootstrap Confidence Intervals
-We compute 95% confidence intervals for the coefficients using the bootstrap_ci() function.
+We compute 95% confidence intervals for the coefficients using the ```bootstrap_ci()``` function.
 
 ```{r}
 ci <- bootstrap_ci(X_subset, y_subset, n_boot = 50, alpha = 0.05)
@@ -76,7 +85,7 @@ print(ci)
 ```
 
 ## Model Evaluation
-We evaluate the performance of the logistic regression model using the evaluate_model() function.
+We evaluate the performance of the logistic regression model using the ```evaluate_model()``` function.
 
 ```{r}
 # Predicted probabilities
@@ -88,8 +97,14 @@ print(metrics)
 
 ```
 
-## Conclusion
-This vignette demonstrated how to preprocess data, fit a logistic regression model, compute bootstrap confidence intervals, and evaluate model performance using the classification package and the adult dataset.
+## Summary 
+
+This vignette demonstrated:
+ 
+- Preprocessing: Data preparation and transformation.
+- Modeling: Logistic regression for binary classification.
+- Inference: Bootstrap confidence intervals for coefficients.
+- Evaluation: Metrics to assess model performance.
 
 ## References
 1- https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137
