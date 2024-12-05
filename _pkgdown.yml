@@ -5,9 +5,9 @@ template:
 navbar:
   left:
   -   text: Overview
-      href: vignettes/classification_vignette.Rmd
+      href: articles/classification_vignette.html
   -   text: Troubleshooting
-      href: vignettes/classification_help.Rmd
+      href: articles/classification_help.html
   right:
   -   icon: fa-github
       href: https://github.com/AU-R-Programming/Final-Project-2
