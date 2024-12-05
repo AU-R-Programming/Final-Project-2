@@ -6,7 +6,7 @@ navbar:
   left:
   -   text: Overview
       href: articles/classification_vignette.html
-  -   text: Troubleshooting
+  -   text: Help
       href: articles/classification_help.html
   right:
   -   icon: fa-github

@@ -42,7 +42,7 @@
   <a href="../articles/classification_vignette.html">Overview</a>
 </li>
 <li>
-  <a href="../articles/classification_help.html">Troubleshooting</a>
+  <a href="../articles/classification_help.html">Help</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -78,29 +78,106 @@
     
     
 <div class="section level2">
-<h2 id="r-markdown">R Markdown<a class="anchor" aria-label="anchor" href="#r-markdown"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This is an R Markdown document. Markdown is a simple formatting
-syntax for authoring HTML, PDF, and MS Word documents. For more details
-on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="external-link uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be
-generated that includes both content as well as the output of any
-embedded R code chunks within the document. You can embed an R code
-chunk like this:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##      speed           dist       </span></span>
-<span><span class="co">##  Min.   : 4.0   Min.   :  2.00  </span></span>
-<span><span class="co">##  1st Qu.:12.0   1st Qu.: 26.00  </span></span>
-<span><span class="co">##  Median :15.0   Median : 36.00  </span></span>
-<span><span class="co">##  Mean   :15.4   Mean   : 42.98  </span></span>
-<span><span class="co">##  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span>
-<span><span class="co">##  Max.   :25.0   Max.   :120.00</span></span></code></pre>
+<p>The Classification Package offers tools to:</p>
+<ul>
+<li>Perform <code>logistic regression</code> using numerical
+optimization.</li>
+<li>Compute <code>bootstrap confidence intervals</code> for model
+coefficients.</li>
+<li>Evaluate <code>model performance metrics</code>.</li>
+</ul>
+<p>This guide explains the steps to set up and use the package for
+classification tasks.</p>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
+<p>To use the Classification Package, ensure you have the necessary
+software environment. Follow these steps to install the package:</p>
+<p>A. Pre-requisites:</p>
+<ul>
+<li>Install <code>R</code> or <code>RStudio</code> for an interactive
+coding environment.</li>
+<li>Ensure your system supports necessary libraries for numerical
+computation.</li>
+</ul>
+<p>B. Package Installation:</p>
+<ul>
+<li>
+<code>Download</code> and <code>install</code> the
+<strong>Classification Package</strong> from its repository or
+source.</li>
+</ul>
+<p>C. Dataset Requirement:</p>
+<ul>
+<li>The package uses datasets like the <code>"adult"</code> dataset for
+examples. Ensure to prepare your data in the correct format (e.g.,
+.csv).</li>
+</ul>
 </div>
-<div class="section level2">
-<h2 id="including-plots">Including Plots<a class="anchor" aria-label="anchor" href="#including-plots"></a>
-</h2>
-<p>You can also embed plots, for example:</p>
+<div class="section level3">
+<h3 id="key-functionalities">Key Functionalities<a class="anchor" aria-label="anchor" href="#key-functionalities"></a>
+</h3>
+<p><strong>Preprocessing Data</strong></p>
+<p>The package includes tools to prepare your data:</p>
+<ul>
+<li>Normalize numerical features (e.g., Min-Max scaling).</li>
+<li>Encode categorical variables (e.g., One-Hot Encoding).</li>
+<li>Select specific columns for feature variables and target
+outcomes.</li>
+</ul>
+<p><strong>Logistic Regression</strong></p>
+<p>Fit a logistic regression model using the provided
+<code><a href="../reference/logistic_regression.html">logistic_regression()</a></code> function:</p>
+<ul>
+<li>Subset your data for efficient computation.</li>
+<li>Prepare input matrices for the features and target variable.</li>
+<li>Use the function to compute the coefficients of the regression
+model.</li>
+</ul>
+<p><strong>Bootstrap Confidence Intervals</strong></p>
+<p>Estimate the variability of model coefficients with
+<code><a href="../reference/bootstrap_ci.html">bootstrap_ci()</a></code>:</p>
+<ul>
+<li>Perform resampling to compute 95% confidence intervals for the
+regression coefficients.</li>
+<li>Set parameters such as the number of bootstrap samples and
+significance levels.</li>
+</ul>
+<p><strong>Model Evaluation</strong></p>
+<p>Evaluate the performance of the fitted model with metrics
+including:</p>
+<ul>
+<li>Accuracy: Overall model correctness.</li>
+<li>Sensitivity: True positive rate.</li>
+<li>Specificity: True negative rate.</li>
+<li>Confusion Matrix: Summary of prediction results.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="example-workflow">Example Workflow<a class="anchor" aria-label="anchor" href="#example-workflow"></a>
+</h3>
+<p>A. Load and Preprocess Data:</p>
+<ul>
+<li>Import a dataset (e.g., “adult.csv”).</li>
+<li>Scale numerical features and encode categorical variables.</li>
+</ul>
+<p>B. Model Fitting:</p>
+<ul>
+<li>Use logistic regression to predict outcomes.</li>
+</ul>
+<p>C. Confidence Interval Calculation:</p>
+<ul>
+<li>Apply bootstrap methods to estimate confidence intervals for model
+coefficients.</li>
+</ul>
+<p>D. Evaluate Results:</p>
+<ul>
+<li>Predict outcomes on validation data.</li>
+<li>Analyze performance using model evaluation metrics.</li>
+</ul>
+</div>
 </div>
   </div>
 
