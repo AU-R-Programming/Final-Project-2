@@ -1,6 +1,7 @@
 Package: Classification
 Title: Classification Package Overview
 Version: 0.0.0.9000
+URL: https://AU-R-Programming.github.io/Final-Project-2
 Authors@R: 
     person("John", "Grace", , "jlg0068@auburn.edu", role = c("aut", "cre"))
     person("Nabin", "Neupane", , "nzn0046@auburn.edu", role = c("aut", "cre"))
