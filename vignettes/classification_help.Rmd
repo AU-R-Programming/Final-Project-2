@@ -5,22 +5,83 @@ date: "2024-12-05"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Introduction
 
-## R Markdown
+The Classification Package offers tools to:
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+- Perform ```logistic regression``` using numerical optimization.
+- Compute ```bootstrap confidence intervals``` for model coefficients.
+- Evaluate ```model performance metrics```.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+This guide explains the steps to set up and use the package for classification tasks.
 
-```{r cars}
-summary(cars)
-```
+## Installation
 
-## Including Plots
+To use the Classification Package, ensure you have the necessary software environment. Follow these steps to install the package:
 
-You can also embed plots, for example:
+A. Pre-requisites:
 
+- Install ```R``` or ```RStudio``` for an interactive coding environment.
+- Ensure your system supports necessary libraries for numerical computation.
 
+B. Package Installation:
+
+- ```Download``` and ```install``` the **Classification Package** from its repository or source.
+
+C. Dataset Requirement:
+
+- The package uses datasets like the ```"adult"``` dataset for examples. Ensure to prepare your data in the correct format (e.g., .csv).
+
+## Key Functionalities
+
+**Preprocessing Data**
+
+The package includes tools to prepare your data:
+
+- Normalize numerical features (e.g., Min-Max scaling).
+- Encode categorical variables (e.g., One-Hot Encoding).
+- Select specific columns for feature variables and target outcomes.
+
+**Logistic Regression**
+
+Fit a logistic regression model using the provided ```logistic_regression()```       function:
+
+- Subset your data for efficient computation.
+- Prepare input matrices for the features and target variable.
+- Use the function to compute the coefficients of the regression model.
+
+**Bootstrap Confidence Intervals**
+
+Estimate the variability of model coefficients with ```bootstrap_ci()```:
+
+- Perform resampling to compute 95% confidence intervals for the regression coefficients.
+- Set parameters such as the number of bootstrap samples and significance levels.
+
+**Model Evaluation**
+
+Evaluate the performance of the fitted model with metrics including:
+
+- Accuracy: Overall model correctness.
+- Sensitivity: True positive rate.
+- Specificity: True negative rate.
+- Confusion Matrix: Summary of prediction results.
+
+## Example Workflow
+
+A. Load and Preprocess Data:
+
+- Import a dataset (e.g., "adult.csv").
+- Scale numerical features and encode categorical variables.
+
+B. Model Fitting:
+
+- Use logistic regression to predict outcomes.
+
+C. Confidence Interval Calculation:
+
+- Apply bootstrap methods to estimate confidence intervals for model coefficients.
+
+D. Evaluate Results:
+
+- Predict outcomes on validation data.
+- Analyze performance using model evaluation metrics.
