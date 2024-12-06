@@ -114,6 +114,8 @@ This vignette demonstrated:
 
 3- https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed
 
+4- https://chatgpt.com/share/67532e2d-2d1c-8011-b0a6-0c85340e9182
+
 
 
 
