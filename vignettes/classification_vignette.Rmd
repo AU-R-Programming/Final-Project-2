@@ -107,8 +107,11 @@ This vignette demonstrated:
 - Evaluation: Metrics to assess model performance.
 
 ## References
+
 1- https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137
+
 2- https://smac-group.github.io/irg/articles/vignette.html
+
 3- https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed
 
 
