@@ -6,8 +6,10 @@ navbar:
   left:
   -   text: Overview
       href: articles/classification_vignette.html
-  -   text: Troubleshooting
+  -   text: Help
       href: articles/classification_help.html
+  -   text: Reference
+      href: reference/index.html
   right:
   -   icon: fa-github
       href: https://github.com/AU-R-Programming/Final-Project-2

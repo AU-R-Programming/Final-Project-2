@@ -1,6 +1,6 @@
 ---
 title: "Final-Project-2: Classification Package Vignette"
-author: "Shahab Musavi,John Grace, Nabin Neupane"
+author: "Shahab Musavi, John Grace, Nabin Neupane"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
