@@ -4,7 +4,6 @@ author: "John Grace"
 date: "2024-12-05"
 output: html_document
 ---
-
 # Introduction
 
 The Classification Package offers tools to:
@@ -61,10 +60,10 @@ Estimate the variability of model coefficients with ```bootstrap_ci()```:
 
 Evaluate the performance of the fitted model with metrics including:
 
-- Accuracy: Overall model correctness.
-- Sensitivity: True positive rate.
-- Specificity: True negative rate.
-- Confusion Matrix: Summary of prediction results.
+- ```Accuracy```: Overall model correctness.
+- ```Sensitivity```: True positive rate.
+- ```Specificity```: True negative rate.
+- ```Confusion Matrix```: Summary of prediction results.
 
 ## Example Workflow
 
