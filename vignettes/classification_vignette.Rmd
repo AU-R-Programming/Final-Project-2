@@ -106,6 +106,8 @@ This vignette demonstrated:
 - Inference: Bootstrap confidence intervals for coefficients.
 - Evaluation: Metrics to assess model performance.
 
+Find more information here: https://au-r-programming.github.io/Final-Project-2/
+
 ## References
 
 1- https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137
