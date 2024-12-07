@@ -10,9 +10,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="Shahab Musavi,John Grace, Nabin Neupane" />
+<meta name="author" content="Shahab Musavi, John Grace, Nabin Neupane" />
 
-<meta name="date" content="2024-11-29" />
+<meta name="date" content="2024-12-06" />
 
 <title>Final-Project-2: Classification Package Vignette</title>
 
@@ -340,11 +340,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Final-Project-2: Classification Package
 Vignette</h1>
-<h4 class="author">Shahab Musavi,John Grace, Nabin Neupane</h4>
-<h4 class="date">2024-11-29</h4>
+<h4 class="author">Shahab Musavi, John Grace, Nabin Neupane</h4>
+<h4 class="date">2024-12-06</h4>
 
 
 
+<div id="the-github-repository-reference-is-au-r-programmingfinal-project-2" class="section level3">
+<h3>The Github repository reference is <a href="https://github.com/AU-R-Programming/Final-Project-2">AU-R-Programming/Final-Project-2</a></h3>
+</div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>The classification package provides tools for logistic regression
@@ -354,11 +357,15 @@ vignette demonstrates these functionalities using the adult dataset.</p>
 </div>
 <div id="preprocessing-the-data" class="section level2">
 <h2>Preprocessing the Data</h2>
+<div id="dataset-overview" class="section level3">
+<h3>Dataset Overview</h3>
 <p>First, let let us take a look at the first few rows of the adult data
 set. The age values are re-scaled using the max-min method to make them
-fall into the range of [0,1] to match other binary values. The income is
-already binarized with 1 meaning the income is higher than 50K, and 0
-menaing the equal to or lower than 50K.</p>
+fall into the range of [0,1] to match other binary values.</p>
+<ul>
+<li><strong>1</strong> indicates income &gt; 50K</li>
+<li><strong>0</strong> indicates income ≤ 50K</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>adult <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;adult.csv&quot;</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">head</span>(adult)</span></code></pre></div>
@@ -376,10 +383,13 @@ menaing the equal to or lower than 50K.</p>
 ## 4  United-States      0
 ## 5           Cuba      0
 ## 6  United-States      0</code></pre>
+</div>
+<div id="feature-selection-and-transformation" class="section level3">
+<h3>Feature Selection and Transformation</h3>
 <p>The adult dataset contains categorical variables, so we first
 preprocess it to convert categorical data into numerical values. Also,
-to reduce the run time, we just consider “age” and “education” as the
-predictors.</p>
+to reduce the run time, we just consider <em>age</em> and
+<em>education</em> as the predictors.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Select the &#39;age&#39; and &#39;education&#39; columns as features and &#39;income&#39; as the outcome</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>features <span class="ot">&lt;-</span> adult[, <span class="fu">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;education&quot;</span>)]</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>outcome <span class="ot">&lt;-</span> adult<span class="sc">$</span>income  <span class="co"># Assuming &#39;income&#39; is the binary response variable</span></span>
@@ -399,11 +409,12 @@ predictors.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">length</span>(y)  <span class="co"># Verify length matches rows in X</span></span></code></pre></div>
 <pre><code>## [1] 30162</code></pre>
 </div>
+</div>
 <div id="logistic-regression" class="section level2">
 <h2>Logistic Regression</h2>
-<p>We fit a logistic regression model using the logistic_regression()
-function. Here, we only consider the first 1000 rows of X and y to
-reduce the run time.</p>
+<p>We fit a logistic regression model using the
+<code>logistic_regression()</code> function. Here, we only consider the
+first 1000 rows of X and y to reduce the run time.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Subset the first 1000 rows of X and y</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>X_subset <span class="ot">&lt;-</span> X[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, ]</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>y_subset <span class="ot">&lt;-</span> y[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>]</span>
@@ -412,55 +423,55 @@ reduce the run time.</p>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">logistic_regression</span>(X_subset, y_subset)</span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="fu">print</span>(beta)</span></code></pre></div>
 <pre><code>##                               [,1]
-##                        -4.21435208
-##                         3.65129144
-## education 10th          0.06355911
-## education 11th         -0.60733910
-## education 12th          2.21342708
-## education 1st-4th      -7.31513623
-## education 5th-6th      -7.72734429
-## education 7th-8th       1.33810143
-## education 9th          -8.38178940
-## education Assoc-acdm    1.80861147
-## education Assoc-voc     2.17981348
-## education Bachelors     2.91574853
-## education Doctorate     4.82902662
-## education HS-grad       1.35284374
-## education Masters       2.75373964
-## education Preschool    -6.65729790
-## education Prof-school   5.48738381
-## education Some-college  1.53229987</code></pre>
+##                        -4.07112099
+##                         3.65063667
+## education 10th         -0.08850904
+## education 11th         -0.76175542
+## education 12th          2.06624976
+## education 1st-4th      -6.83548882
+## education 5th-6th      -7.27557947
+## education 7th-8th       1.19284377
+## education 9th          -7.94547838
+## education Assoc-acdm    1.67110018
+## education Assoc-voc     2.03575660
+## education Bachelors     2.77112729
+## education Doctorate     4.68372446
+## education HS-grad       1.20990360
+## education Masters       2.61281640
+## education Preschool    -6.13736613
+## education Prof-school   5.34099597
+## education Some-college  1.38853817</code></pre>
 </div>
 <div id="bootstrap-confidence-intervals" class="section level2">
 <h2>Bootstrap Confidence Intervals</h2>
 <p>We compute 95% confidence intervals for the coefficients using the
-bootstrap_ci() function.</p>
+<code>bootstrap_ci()</code> function.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">bootstrap_ci</span>(X_subset, y_subset, <span class="at">n_boot =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">print</span>(ci)</span></code></pre></div>
 <pre><code>##                              lower     upper
-##                         -7.1919503 -3.672088
-##                          3.0110019  4.634071
-## education 10th         -12.6172389  2.138051
-## education 11th         -15.1580333  1.678932
-## education 12th          -7.2690935  5.577157
-## education 1st-4th      -11.1813950  0.000000
-## education 5th-6th      -12.2290732 -5.987661
-## education 7th-8th       -9.6787421  3.766121
-## education 9th          -13.0809199 -7.313672
-## education Assoc-acdm     0.5727767  4.976788
-## education Assoc-voc      1.3133157  4.998654
-## education Bachelors      2.2645770  5.937511
-## education Doctorate      3.7501700 16.948814
-## education HS-grad        0.6834094  4.508004
-## education Masters        1.9909629  5.873216
-## education Preschool    -10.7603888  0.000000
-## education Prof-school    4.3618554 20.136241
-## education Some-college   0.7901872  4.256068</code></pre>
+##                         -6.8009469 -3.381363
+##                          3.0404462  4.796339
+## education 10th         -18.4126869  2.448499
+## education 11th         -15.7757885  1.652031
+## education 12th         -10.0697049  4.428543
+## education 1st-4th      -11.9620035 -4.271330
+## education 5th-6th      -14.6864432 -4.955339
+## education 7th-8th       -9.7777706  3.811030
+## education 9th          -15.3820009 -7.132874
+## education Assoc-acdm     0.8565385  4.447790
+## education Assoc-voc      1.3193915  4.711445
+## education Bachelors      2.0344060  5.481659
+## education Doctorate      3.6037879 21.256666
+## education HS-grad        0.3653966  4.011750
+## education Masters        1.8443654  5.178162
+## education Preschool    -11.0602069  0.000000
+## education Prof-school    4.8312130 24.739058
+## education Some-college   0.8251749  4.166299</code></pre>
 </div>
 <div id="model-evaluation" class="section level2">
 <h2>Model Evaluation</h2>
 <p>We evaluate the performance of the logistic regression model using
-the evaluate_model() function.</p>
+the <code>evaluate_model()</code> function.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Predicted probabilities</span></span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>y_pred <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>X <span class="sc">%*%</span> beta))</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
@@ -470,39 +481,44 @@ the evaluate_model() function.</p>
 <pre><code>## $ConfusionMatrix
 ##           True
 ## Predicted  Positive Negative
-##   Positive     2123     1421
-##   Negative     5385    21233
+##   Positive     2123     1422
+##   Negative     5385    21232
 ## 
 ## $Prevalence
 ## [1] 0.2489225
 ## 
 ## $Accuracy
-## [1] 0.7743518
+## [1] 0.7743187
 ## 
 ## $Sensitivity
 ## [1] 0.2827651
 ## 
 ## $Specificity
-## [1] 0.9372738
+## [1] 0.9372296
 ## 
 ## $FDR
-## [1] 0.4009594
+## [1] 0.4011283
 ## 
 ## $DOR
-## [1] 5.890899</code></pre>
+## [1] 5.886479</code></pre>
 </div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
-<p>This vignette demonstrated how to preprocess data, fit a logistic
-regression model, compute bootstrap confidence intervals, and evaluate
-model performance using the classification package and the adult
-dataset.</p>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>This vignette demonstrated:</p>
+<ul>
+<li>Preprocessing: Data preparation and transformation.</li>
+<li>Modeling: Logistic regression for binary classification.</li>
+<li>Inference: Bootstrap confidence intervals for coefficients.</li>
+<li>Evaluation: Metrics to assess model performance.</li>
+</ul>
+<p>Find more information here: <a href="https://au-r-programming.github.io/Final-Project-2/" class="uri">https://au-r-programming.github.io/Final-Project-2/</a></p>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
-<p>1- <a href="https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137" class="uri">https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137</a>
-2- <a href="https://smac-group.github.io/irg/articles/vignette.html" class="uri">https://smac-group.github.io/irg/articles/vignette.html</a>
-3- <a href="https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed" class="uri">https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed</a></p>
+<p>1- <a href="https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137" class="uri">https://medium.com/@curryrowan/simplified-logistic-regression-classification-with-categorical-variables-in-python-1ce50c4b137</a></p>
+<p>2- <a href="https://smac-group.github.io/irg/articles/vignette.html" class="uri">https://smac-group.github.io/irg/articles/vignette.html</a></p>
+<p>3- <a href="https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed" class="uri">https://stackoverflow.com/questions/72179150/error-in-read-dcf-line-starting-is-malformed</a></p>
+<p>4- <a href="https://chatgpt.com/share/67532e2d-2d1c-8011-b0a6-0c85340e9182" class="uri">https://chatgpt.com/share/67532e2d-2d1c-8011-b0a6-0c85340e9182</a></p>
 </div>
 
 
