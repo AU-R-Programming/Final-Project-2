@@ -14,6 +14,7 @@ library(Classification)
 
 ```
 
+### The Github repository reference is [AU-R-Programming/Final-Project-2](https://github.com/AU-R-Programming/Final-Project-2) 
 
 ## Introduction
 The classification package provides tools for logistic regression using numerical optimization, computing bootstrap confidence intervals for model coefficients, and evaluating model performance metrics.
